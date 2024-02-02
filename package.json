@@ -1,6 +1,6 @@
 {
-  "name": "cov-ie-mpage",
-  "version": "0.0.0",
+  "name": "ach-patient-list",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

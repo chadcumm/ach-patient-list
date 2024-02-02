@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cov-ie-mpage": {
+    "ach-patient-list": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../c0665/cov-ie-mpage",
+            "outputPath": "../c0665/ach-patient-list",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -40,7 +40,7 @@
           },
           "configurations": {
             "production": {
-              "outputPath": "../p0665/cov-ie-mpage",
+              "outputPath": "../p0665/ach-patient-list",
               "baseHref": "./index.html",
               "budgets": [
                 {
@@ -76,15 +76,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cov-ie-mpage:build",
+            "browserTarget": "ach-patient-list:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "cov-ie-mpage:build:production"
+              "browserTarget": "ach-patient-list:build:production"
             },
             "development": {
-              "browserTarget": "cov-ie-mpage:build:development"
+              "browserTarget": "ach-patient-list:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cov-ie-mpage:build"
+            "browserTarget": "ach-patient-list:build"
           }
         },
         "test": {
@@ -116,5 +116,5 @@
       }
     }
   },
-  "defaultProject": "cov-ie-mpage"
+  "defaultProject": "ach-patient-list"
 }
