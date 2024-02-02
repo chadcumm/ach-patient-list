@@ -10,11 +10,13 @@ import {AppComponent} from './app.component';
 import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { ComponentVersionComponent } from './components/component-version/component-version.component';
+import { PatientTableComponent } from './components/patient-table/patient-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComponentVersionComponent
+    ComponentVersionComponent,
+    PatientTableComponent
   ],
   imports: [
     BrowserModule,

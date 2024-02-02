@@ -10,6 +10,16 @@ export class PopulationDataService {
     public populationData: CustomService
   ) { }
 
+
+  public get patientlist(): any[] {
+    return this.populationData.get('patient_population').visits;
+  }
+  
+  // Determine if patients have been loaded
+  public get patientlistLoaded(): boolean {
+    return this.populationData.isLoaded('patient_population');
+  }
+
   public loadPatientPopulation(): void {
 
     this.loading_population = true;
@@ -18,11 +28,12 @@ export class PopulationDataService {
       customScript: {
         script: [
           {
-            name: '1cov_base_development_01:group1',
+            name: 'cov_ach_pat_population:group1',
             run: 'pre',
             id: 'patient_population'
           }
-        ]
+        ],
+        clearPatientList: true
       }
     }, undefined, (() => { this.loading_population = false }));
   }
