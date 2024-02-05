@@ -1,7 +1,12 @@
 <mpage-table 
     [tableData]="patientListDS.patientlist" 
     [toolbar]="true"
-    [contextMenu]="[{label: 'Update Status'},{label: 'Add Note'},{label: 'Clinical Screening Tool'}]"
+    [contextMenu]="[
+            {label: 'Update Status'},
+            {label: 'Add Note'},
+            {label: 'Clinical Stability Tool'},
+            {label: 'Social Stability Tool'}
+            ]"
     [params]="{paginator: false, columnFilter: true}"
     (clickColumn)="cellColumnClick($event)"
     (clickRow)="cellContextMenu($event)"

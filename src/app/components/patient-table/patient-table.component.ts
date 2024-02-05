@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopulationDataService } from 'src/app/service/population-data.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MPageConfirmComponent } from '@clinicaloffice/clinical-office-mpage';
+import { MPageConfirmComponent, mPageService } from '@clinicaloffice/clinical-office-mpage';
 @Component({
   selector: 'app-patient-table',
   templateUrl: './patient-table.component.html',
@@ -11,6 +11,7 @@ export class PatientTableComponent implements OnInit {
 
   constructor(
     public patientListDS: PopulationDataService,
+    public mPage: mPageService,
     public dialog: MatDialog
   ) { }
 
@@ -39,13 +40,13 @@ export class PatientTableComponent implements OnInit {
  
 
   public cellContextMenu(event: any): void {
-    console.log('Cell Row Click:', event);
+    this.mPage.putLog('Cell Row Click:', JSON.stringify(event));
     if (event.contextMenuAction) {
       switch (event.contextMenuAction) {
-        case 'Clinical Screening Tool':
+        case 'Clinical Stability Tool':
           this.OpenScreeningTool(event.hiddenData.cstPowerformId, event);
           break;
-          case 'Social Screening Tool':
+          case 'Social Stability Tool':
             this.OpenScreeningTool(event.hiddenData.sstPowerformId, event);
             break;
         default:
@@ -63,15 +64,16 @@ export class PatientTableComponent implements OnInit {
   }
 
   OpenScreeningTool(form: number, data: any) {
-    console.log('OpenScreeningTool:  data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId + ' form: ' + form)
+    
+    this.mPage.putLog('OpenScreeningTool:  data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId + ' form: ' + form)
     // @ts-ignore
     const d = window.external.DiscernObjectFactory('POWERFORM');
-    d.OpenForm(data.personId, data.encntrId, 10000.00, 0.0, 0);
+    d.OpenForm(data.personId, data.encntrId, form, 0.0, 0);
   }
 
 
   CernerApplicationAction(action: string, data: any): void {
-    console.log('action: ' + action + 'data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId)
+    this.mPage.putLog('action: ' + action + ' data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId)
     if (data.encntrId && data.personId) {
       const el = document.getElementById('CernerAppLink');
 
