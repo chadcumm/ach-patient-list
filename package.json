@@ -1,6 +1,6 @@
 {
   "name": "ach-patient-list",
-  "version": "0.0.7",
+  "version": "0.0.14",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^12.2.16",
     "@angular/platform-browser-dynamic": "^12.2.16",
     "@angular/router": "^12.2.16",
-    "@clinicaloffice/clinical-office-mpage": "^3.6.25",
+    "@clinicaloffice/clinical-office-mpage": "^3.6.56",
     "classlist.js": "^1.1.20150312",
     "fast-sort": "^3.2.0",
     "iframe-resizer": "^4.3.6",

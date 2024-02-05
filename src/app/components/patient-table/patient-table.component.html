@@ -1,1 +1,6 @@
-<mpage-table [tableData]="patientListDS.patientlist" [toolbar]="true"></mpage-table>
+<mpage-table 
+    [tableData]="patientListDS.patientlist" 
+    [toolbar]="true"
+    [contextMenu]="[{label: 'Update Status'},{label: 'Add Note'},{label: 'Clinical Screening Tool'}]"
+    [params]="{paginator: false, columnFilter: true}"
+    ></mpage-table>
