@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../c0665/ach-patient-list",
+            "outputPath": "../b0665/ach-patient-list",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,9 +69,18 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "cert": {
+              "outputPath": "../c0665/ach-patient-list"
+            },
+            "mock": {
+              "outputPath": "../m0665/ach-patient-list"
+            },
+            "build": {
+              "outputPath": "../b0665/ach-patient-list"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -85,6 +94,15 @@
             },
             "development": {
               "browserTarget": "ach-patient-list:build:development"
+            },
+            "cert": {
+              "browserTarget": "ach-patient-list:build:cert"
+            },
+            "mock": {
+              "browserTarget": "ach-patient-list:build:mock"
+            },
+            "build": {
+              "browserTarget": "ach-patient-list:build:build"
             }
           },
           "defaultConfiguration": "development"
