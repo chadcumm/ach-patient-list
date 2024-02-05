@@ -36,6 +36,8 @@ export class AppComponent implements OnInit {
       // Add your initialization code here - do not place outside setTimeout function
       if (this.mPage.inMpage === true) {
         this.patientListDS.loadPatientPopulation();
+      } else {
+        this.patientListDS.loadLocalPatientPopulation();
       }
     }, 0);
   }

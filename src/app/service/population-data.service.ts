@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { CustomService } from '@clinicaloffice/clinical-office-mpage';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import {mPageService} from "@clinicaloffice/clinical-office-mpage";
 @Injectable({
   providedIn: 'root'
 })
-export class PopulationDataService {
+export class PopulationDataService implements OnInit {
   public loading_population = false;
   private localJSONData: any[] | undefined;
 
@@ -16,10 +16,18 @@ export class PopulationDataService {
     public mPage: mPageService,
     private http: HttpClient
   ) { 
-      this.loadLocalPatientPopulation();
+    // moving to NgOnInit 
+    //this.loadLocalPatientPopulation();
   }
 
-
+  ngOnInit(): void {
+    // moved to app.component.ts ngoninit
+    /*
+    if (this.mPage.inMpage === false) {
+      this.loadLocalPatientPopulation();
+    }
+    */
+  }
   public get patientlist(): any[] {
     if (this.mPage.inMpage === true) {
       return this.populationData.get('patient_population').visits;
