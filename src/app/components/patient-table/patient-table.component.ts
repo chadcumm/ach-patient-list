@@ -41,16 +41,34 @@ export class PatientTableComponent implements OnInit {
   public cellContextMenu(event: any): void {
     console.log('Cell Row Click:', event);
     if (event.contextMenuAction) {
-      const dialogRef = this.dialog.open(MPageConfirmComponent, {
-        width: '500px',
-        data: {
-            title: 'Row Column Click',
-            text: JSON.stringify(event),
-            icon: 'info'
-        }
-      });
+      switch (event.contextMenuAction) {
+        case 'Clinical Screening Tool':
+          this.OpenScreeningTool(event.hiddenData.cstPowerformId, event);
+          break;
+          case 'Social Screening Tool':
+            this.OpenScreeningTool(event.hiddenData.sstPowerformId, event);
+            break;
+        default:
+          const dialogRef = this.dialog.open(MPageConfirmComponent, {
+            width: '500px',
+            data: {
+                title: 'Row Column Click',
+                text: JSON.stringify(event),
+                icon: 'info'
+            }
+          });
+          break;
+      }
     }
   }
+
+  OpenScreeningTool(form: number, data: any) {
+    console.log('OpenScreeningTool:  data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId + ' form: ' + form)
+    // @ts-ignore
+    const d = window.external.DiscernObjectFactory('POWERFORM');
+    d.OpenForm(data.personId, data.encntrId, 10000.00, 0.0, 0);
+  }
+
 
   CernerApplicationAction(action: string, data: any): void {
     console.log('action: ' + action + 'data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId)
