@@ -3,4 +3,6 @@
     [toolbar]="true"
     [contextMenu]="[{label: 'Update Status'},{label: 'Add Note'},{label: 'Clinical Screening Tool'}]"
     [params]="{paginator: false, columnFilter: true}"
+    (clickColumn)="cellColumnClick($event)"
+    (clickRow)="cellContextMenu($event)"
     ></mpage-table>

@@ -1,11 +1,14 @@
 {
   "name": "ach-patient-list",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "prebuild": "npm --no-git-tag-version version patch",
-    "build": "ng build --configuration=production",
+    "prod": "npm run prebuild && ng build --configuration=production",
+    "cert": "npm run prebuild && ng build --configuration=cert",
+    "build": "npm run prebuild && ng build --configuration=build",
+    "mock": "npm run prebuild && ng build --configuration=mock",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
