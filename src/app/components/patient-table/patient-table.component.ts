@@ -55,7 +55,7 @@ export class PatientTableComponent implements OnInit {
   CernerApplicationAction(action: string, data: any): void {
     console.log('action: ' + action + 'data.encntrId: ' + data.encntrId + ' data.personId: ' + data.personId)
     if (data.encntrId && data.personId) {
-      const el = document.getElementById('applink');
+      const el = document.getElementById('CernerAppLink');
 
       switch (action) {
         case 'OPENCHART':
