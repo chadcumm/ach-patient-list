@@ -56,7 +56,7 @@ export class PatientTableComponent implements OnInit {
           const dialogRef = this.dialog.open(MPageConfirmComponent, {
             width: '500px',
             data: {
-                title: 'Row Column Click',
+                title: 'Context Menu Click',
                 text: JSON.stringify(event),
                 icon: 'info'
             }
