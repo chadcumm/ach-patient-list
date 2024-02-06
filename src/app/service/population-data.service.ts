@@ -32,12 +32,21 @@ export class PopulationDataService implements OnInit {
     if (this.mPage.inMpage === true) {
       return this.populationData.get('patient_population').visits;
     } else {
-      console.log('patientlist:', this.localJSONData);
+      //console.log('patientlist:', this.localJSONData);
       return this.localJSONData?.[0]?.visits || [];
     }
   }
 
-
+  public updatePatientName(patientName: string, encntrId: number) {
+    if (this.localJSONData) {
+      let patientList = this.localJSONData[0].visits;
+      patientList.forEach((visit: any) => {
+        if (visit.encntrId === encntrId) {
+          visit.patientName = patientName;
+        }
+      });
+    }
+  }
   
   // Determine if patients have been loaded
   public get patientlistLoaded(): boolean {

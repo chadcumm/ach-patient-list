@@ -11,12 +11,14 @@ import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-a
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { ComponentVersionComponent } from './components/component-version/component-version.component';
 import { PatientTableComponent } from './components/patient-table/patient-table.component';
-
+import { AchCommentComponent } from './components/ach-comment/ach-comment.component';
+import {MatDialogModule} from "@angular/material/dialog";
 @NgModule({
   declarations: [
     AppComponent,
     ComponentVersionComponent,
-    PatientTableComponent
+    PatientTableComponent,
+    AchCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { PatientTableComponent } from './components/patient-table/patient-table.
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatDialogModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: ErrorHandlerService},
