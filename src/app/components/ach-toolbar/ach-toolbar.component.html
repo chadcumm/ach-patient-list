@@ -1,6 +1,12 @@
-<app-component-version></app-component-version>
-<mat-toolbar>
+<div class="align-right">
+    <app-component-version></app-component-version>
+  </div>
+<mat-toolbar class="toolbar">
     <button mat-icon-button title="Save user preferences" (click)="patientListDS.savePreferences()">
         <mat-icon>save</mat-icon>
+    </button>
+    <!-- Run Button -->
+    <button mat-icon-button title="Run" (click)="patientListDS.MasterLoadPatientData()" [disabled]="patientListDS.loading_population">
+        <mat-icon>play_arrow</mat-icon>
     </button>
 </mat-toolbar>

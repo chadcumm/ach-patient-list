@@ -34,10 +34,59 @@ export class PopulationDataService implements OnInit {
   }
 
 public savePreferences(): void {
-  this.mPage.putLog(`Save Preferences ${JSON.stringify(this.ACHColumnConfig)}`);
-  this.snackBar.open('Preferences Saved', 'Close', {duration: 2000});
+  this.mPage.putLog(`Save Preferences for ${this.populationData.mpage.prsnlId} ${JSON.stringify(this.ACHColumnConfig)}`);
+  if (this.mPage.inMpage === true) {
+    this.populationData.executeDmInfoAction('saveUserPrefs', 'w', [
+      {
+        infoDomain: 'COV ACH Patient List Preferences',
+        infoName: 'column_prefs',
+        infoDate: new Date(),
+        infoChar: '',
+        infoNumber: 0,
+        infoLongText: JSON.stringify({
+          columnConfig: this.ACHColumnConfig
+        }),
+        infoDomainId: this.populationData.mpage.prsnlId
+      }
+    ], () => {
+      this.snackBar.open('Saved Preferences.', 'Ok', {duration: 1000});
+    });
+  } else {
+  this.snackBar.open('Preferences Would Be Saved', 'Close', {duration: 2000});
+  }
 }
 
+// use this function to load th patient data
+public MasterLoadPatientData(): void {
+  this.mPage.putLog('MasterLoadPatientData');
+  if (this.mPage.inMpage === true) {
+    this.loadPatientPopulation();
+  } else {
+    this.loadLocalPatientPopulation();
+  }
+}
+
+// Load user preferences
+public loadPreferences(): void {
+  this.loading_population = true;
+
+  const prefMessage = this.populationData.emptyDmInfo;
+  prefMessage.infoDomain = 'COV ACH Patient List Preferences';
+  prefMessage.infoName = 'column_prefs';
+  prefMessage.infoDomainId = this.populationData.mpage.prsnlId
+
+  this.populationData.executeDmInfoAction('userPrefs', 'r', [ prefMessage ], () => {
+
+    // Check for user preferences and assign them
+    if (this.populationData.isLoaded('userPrefs')) {
+      const LoadedConfig = JSON.parse(this.populationData.get('userPrefs').dmInfo[0].longText);
+      this.ACHColumnConfig = LoadedConfig.columnConfig;
+      this.mPage.putLog(`Loaded Preferences for ${this.populationData.mpage.prsnlId} ${JSON.stringify(this.ACHColumnConfig)}`);
+    }
+
+    this.loadPatientPopulation()
+  });
+}
   public get patientlist(): any[] {
     if (this.mPage.inMpage === true) {
       return this.populationData.get('patient_population').visits;
