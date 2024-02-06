@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopulationDataService } from 'src/app/service/population-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MPageConfirmComponent, mPageService } from '@clinicaloffice/clinical-office-mpage';
+import { MPageConfirmComponent, mPageService, IColumnConfig } from '@clinicaloffice/clinical-office-mpage';
 import { AchCommentComponent } from '../ach-comment/ach-comment.component';
 @Component({
   selector: 'app-patient-table',

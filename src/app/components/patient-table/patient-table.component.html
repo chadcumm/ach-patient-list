@@ -1,6 +1,7 @@
 <mpage-table 
     [tableData]="patientListDS.patientlist" 
     [toolbar]="true"
+    [(columnConfig)]="patientListDS.ACHColumnConfig"
     [contextMenu]="[
             {label: 'Update Status'},
             {label: 'Add Note'},

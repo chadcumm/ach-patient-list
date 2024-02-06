@@ -13,12 +13,14 @@ import { ComponentVersionComponent } from './components/component-version/compon
 import { PatientTableComponent } from './components/patient-table/patient-table.component';
 import { AchCommentComponent } from './components/ach-comment/ach-comment.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { AchToolbarComponent } from './components/ach-toolbar/ach-toolbar.component';
 @NgModule({
   declarations: [
     AppComponent,
     ComponentVersionComponent,
     PatientTableComponent,
-    AchCommentComponent
+    AchCommentComponent,
+    AchToolbarComponent
   ],
   imports: [
     BrowserModule,

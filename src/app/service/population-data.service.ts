@@ -1,20 +1,24 @@
 import { Injectable, OnInit } from '@angular/core';
-import { CustomService } from '@clinicaloffice/clinical-office-mpage';
+import { CustomService, mPageService, IColumnConfig } from '@clinicaloffice/clinical-office-mpage';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {mPageService} from "@clinicaloffice/clinical-office-mpage";
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopulationDataService implements OnInit {
   public loading_population = false;
+  public ACHColumnConfig: IColumnConfig = {columns: [], columnSort: [], freezeLeft: 0};
+
   private localJSONData: any[] | undefined;
 
   constructor(
     public populationData: CustomService,
     public mPage: mPageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackBar: MatSnackBar
   ) { 
     // moving to NgOnInit 
     //this.loadLocalPatientPopulation();
@@ -28,6 +32,12 @@ export class PopulationDataService implements OnInit {
     }
     */
   }
+
+public savePreferences(): void {
+  this.mPage.putLog(`Save Preferences ${JSON.stringify(this.ACHColumnConfig)}`);
+  this.snackBar.open('Preferences Saved', 'Close', {duration: 2000});
+}
+
   public get patientlist(): any[] {
     if (this.mPage.inMpage === true) {
       return this.populationData.get('patient_population').visits;
@@ -38,14 +48,17 @@ export class PopulationDataService implements OnInit {
   }
 
   public updatePatientName(patientName: string, encntrId: number) {
-    if (this.localJSONData) {
-      let patientList = this.localJSONData[0].visits;
-      patientList.forEach((visit: any) => {
-        if (visit.encntrId === encntrId) {
-          visit.patientName = patientName;
-        }
-      });
+    let patientList: any[];
+    if (this.mPage.inMpage === true) {
+      patientList = this.populationData.get('patient_population').visits;
+    } else {
+      patientList = this.localJSONData?.[0]?.visits || [];
     }
+    patientList.forEach((visit: any) => {
+      if (visit.encntrId === encntrId) {
+        visit.patientName = patientName;
+      }
+    });
   }
   
   // Determine if patients have been loaded
