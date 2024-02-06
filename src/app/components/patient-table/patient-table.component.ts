@@ -19,6 +19,9 @@ export class PatientTableComponent implements OnInit {
 
   }
 
+
+
+
   public cellColumnClick(event: any): void {
     console.log('Cell Column Click:', event);
 
@@ -40,8 +43,8 @@ export class PatientTableComponent implements OnInit {
  
 
   public cellContextMenu(event: any): void {
-    this.mPage.putLog('Cell Row Click:', JSON.stringify(event));
     if (event.contextMenuAction) {
+      this.mPage.putLog('Context Menu Click:', JSON.stringify(event));
       switch (event.contextMenuAction) {
         case 'Clinical Stability Tool':
           this.OpenScreeningTool(event.hiddenData.cstPowerformId, event);
