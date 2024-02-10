@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PopulationDataService implements OnInit {
   public loading_population = false;
+  public population_refereshed = false;
+
   public ACHColumnConfig: IColumnConfig = {columns: [], columnSort: [], freezeLeft: 0};
 
   private localJSONData: any[] | undefined;
@@ -109,6 +111,20 @@ public loadPreferences(): void {
       }
     });
   }
+
+  public updateACHComment(NewACHComment: string, encntrId: number) {
+    let patientList: any[];
+    if (this.mPage.inMpage === true) {
+      patientList = this.populationData.get('patient_population').visits;
+    } else {
+      patientList = this.localJSONData?.[0]?.visits || [];
+    }
+    patientList.forEach((visit: any) => {
+      if (visit.encntrId === encntrId) {
+        visit.achComment = NewACHComment;
+      }
+    });
+  }
   
   // Determine if patients have been loaded
   public get patientlistLoaded(): boolean {
@@ -134,7 +150,10 @@ public loadPreferences(): void {
         ],
         clearPatientList: true
       }
-    }, undefined, (() => { this.loading_population = false }));
+    }, undefined, (() => { 
+      this.loading_population = false 
+      this.population_refereshed = true;  
+    }));
   }
 
   // load the patient data from a local JSON file.  Useful when doing offline development.  Add the json to a patient_population.json file in the assests/data folder
@@ -151,10 +170,12 @@ public loadPreferences(): void {
         (data: any) => {
           this.localJSONData = [data];
           this.loading_population = false;
+          this.population_refereshed = true;  
         },
         (error: any) => {
           console.error('Error loading patient population:', error);
           this.loading_population = false;
+          
         }
       );
   }
