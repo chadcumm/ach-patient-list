@@ -18,7 +18,7 @@ export class PopulationDataService implements OnInit {
     public populationData: CustomService,
     public mPage: mPageService,
     private http: HttpClient,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) { 
     // moving to NgOnInit 
     //this.loadLocalPatientPopulation();
@@ -59,6 +59,7 @@ public savePreferences(): void {
 // use this function to load th patient data
 public MasterLoadPatientData(): void {
   this.mPage.putLog('MasterLoadPatientData');
+  
   if (this.mPage.inMpage === true) {
     this.loadPatientPopulation();
   } else {
