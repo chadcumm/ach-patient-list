@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck } from '@angular/core';
 import { PopulationDataService } from 'src/app/service/population-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MPageConfirmComponent, mPageService } from '@clinicaloffice/clinical-office-mpage';
@@ -6,18 +6,30 @@ import { AchCommentComponent } from '../ach-comment/ach-comment.component';
 @Component({
   selector: 'app-patient-table',
   templateUrl: './patient-table.component.html',
-  styleUrls: ['./patient-table.component.scss']
+  styleUrls: ['./patient-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PatientTableComponent implements OnInit {
+export class PatientTableComponent implements OnInit, DoCheck {
 
   constructor(
     public patientListDS: PopulationDataService,
     public mPage: mPageService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public patientListCdr: ChangeDetectorRef
   ) { }
+  ngDoCheck(): void {
+    if (this.patientListDS.population_refereshed === true) {
+      setTimeout(() => {
+        this.patientListDS.population_refereshed = false;
+        this.mPage.putLog('Patient Table Refreshed-PatientTableComponent:ngDoCheck');
+        this.patientListCdr.detectChanges();
+      });
+
+    }
+  }
 
   ngOnInit(): void {
-
+   
   }
 
 
@@ -52,8 +64,9 @@ export class PatientTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(ReturnComment => {
       this.mPage.putLog(`ACH Comment: ${ReturnComment} for encntrId: ${event.encntrId} and personId: ${event.personId}`);
-      this.patientListDS.updatePatientName(ReturnComment, event.encntrId);
       // Here you can handle the comment
+      this.patientListDS.updateACHComment(ReturnComment, event.encntrId);
+      
     });
   }
 

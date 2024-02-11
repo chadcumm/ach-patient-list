@@ -1,6 +1,6 @@
 {
   "name": "ach-patient-list",
-  "version": "0.0.29",
+  "version": "0.0.35",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

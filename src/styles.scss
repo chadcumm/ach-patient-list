@@ -2,3 +2,7 @@
 @use '~@angular/material' as mat;
 @import "theme";
 
+.needsReview {
+    background-color: rgb(244, 129, 129);
+  }
+  
