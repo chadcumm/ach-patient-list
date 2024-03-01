@@ -26,6 +26,12 @@ export class PatientTableComponent implements OnInit, DoCheck {
 
   _selectedColumns: any[] = [];
 
+  commentOriginalValue: any;
+
+  selectedPatient: any;
+
+  speedDialItems: any[] = [];
+
   ngDoCheck(): void {
     if (this.patientListDS.population_refereshed === true) {
       setTimeout(() => {
@@ -39,6 +45,28 @@ export class PatientTableComponent implements OnInit, DoCheck {
 
 
   ngOnInit(): void {
+    this.speedDialItems = [
+      {
+          icon: 'pi pi-pencil',
+          
+      },
+      {
+          icon: 'pi pi-refresh',
+          
+      },
+      {
+          icon: 'pi pi-trash',
+          
+      },
+      {
+          icon: 'pi pi-upload',
+      },
+      {
+          icon: 'pi pi-external-link',
+          url: 'http://angular.io'
+
+      }
+    ]
 
     this.cols = [
       { 
@@ -71,7 +99,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
       },
       { 
         field: 'pso', 
-        header: 'POS',  
+        header: 'PSO',  
         type: 'string',
         sortable: true,
         editable: false
@@ -84,8 +112,43 @@ export class PatientTableComponent implements OnInit, DoCheck {
         editable: false
       },
       { 
+        field: 'priority', 
+        header: 'Priority', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'demographicScreen', 
+        header: 'Demographic Screen', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'cstResult', 
+        header: 'CST Result', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'cstReassessmentDt', 
+        header: 'CST Reassessment Date', 
+        type: 'date',
+        sortable: true,
+        editable: false
+      },
+      { 
         field: 'drComment', 
         header: 'Dr Comment', 
+        type: 'string',
+        sortable: false,
+        editable: true
+      },
+      { 
+        field: 'rnComment', 
+        header: 'RN Comment', 
         type: 'string',
         sortable: false,
         editable: true
@@ -96,11 +159,24 @@ export class PatientTableComponent implements OnInit, DoCheck {
    
   }
 
+  onRowSelect(event: any) {
+    console.log('Patient Selected:', event.data);
+    this.mPage.putLog('Patient Selected: ' + JSON.stringify(event.data));
+    this.selectedPatient = event.data;
+  }
+
   clear(table: Table) {
     table.clear();
-}
+  }
+
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
+  }
+
+  saveData(rowData: any, field: string) {
+    if (rowData[field] !== this.commentOriginalValue) {
+      console.log('saved')
+    }
   }
 
   set selectedColumns(val: any[]) {

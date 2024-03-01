@@ -19,6 +19,7 @@ import { TableModule } from 'primeng/table';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
+import {SpeedDialModule} from 'primeng/speeddial';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {ButtonModule} from 'primeng/button';
     MultiSelectModule,
     InputTextModule,
     ButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SpeedDialModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: ErrorHandlerService},

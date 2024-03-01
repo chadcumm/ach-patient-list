@@ -3,10 +3,14 @@
         [value]="patientListDS.patientlist"
         [columns]="selectedColumns"
         responsiveLayout="scroll"
-        styleClass="p-datatable-gridlines"
+        styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
         sortMode="multiple"
         [resizableColumns]="true"
-        [globalFilterFields]="['patientName','facility','location']"
+        selectionMode="single"
+        [(selection)]="selectedPatient"
+        dataKey="encntrId"
+        (onRowSelect)="onRowSelect($event)"
+        [globalFilterFields]="['patientName','facility','location','drComment','rnComment','status']"
 >
         <ng-template pTemplate="caption">
                 <div class="p-grid">
@@ -34,6 +38,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
                 <tr>
+                        
                 <ng-container *ngFor="let col of columns">
                         <ng-container *ngIf="col.sortable">
                                 <th pResizableColumn pSortableColumn="{{col.field}}">
@@ -48,19 +53,37 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
+                <tr [pSelectableRow]="rowData">
                  <ng-container *ngFor="let col of columns">
-                <td pEditableColumn>
-                        <span *ngIf="col.type === 'date'">
-                                <ng-container *ngIf="rowData[col.field] !== '0000-00-00T00:00:00.000+00:00'">
-                                        {{rowData[col.field] | date: 'dd/MM/yyyy hh:mm'}}
-                                </ng-container>
-                                <ng-container *ngIf="rowData[col.field] === '0000-00-00T00:00:00.000+00:00'">
-                                        N/A
-                                </ng-container>
-                        </span>
-                        <span *ngIf="col.type !== 'date'">{{rowData[col.field]}}</span>
-                    </td>
+                 <td *ngIf="col.editable; else notEditable" pEditableColumn>
+                        <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText 
+                                                type="text" 
+                                                [(ngModel)]="rowData[col.field]"
+                                                (focus)="this.commentOriginalValue = rowData[col.field]" 
+                                                (blur)="saveData(rowData, col.field)" 
+                                                >
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData[col.field]}}
+                                </ng-template>
+                            </p-cellEditor>
+                 </td>
+                 <ng-template #notEditable>
+                        <td>
+                                <span *ngIf="col.type === 'date'">
+                                        <ng-container *ngIf="rowData[col.field] !== '0000-00-00T00:00:00.000+00:00'">
+                                                {{rowData[col.field] | date: 'dd/MM/yyyy hh:mm'}}
+                                        </ng-container>
+                                        <ng-container *ngIf="rowData[col.field] === '0000-00-00T00:00:00.000+00:00'">
+                                                
+                                        </ng-container>
+                                </span>
+                                <span *ngIf="col.type !== 'date'">{{rowData[col.field]}}</span>
+                        </td>
+                </ng-template>
+                
                  </ng-container>
                 </tr>
             </ng-template>
