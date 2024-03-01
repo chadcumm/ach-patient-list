@@ -38,32 +38,50 @@ export class PatientTableComponent implements OnInit, DoCheck {
   public cellColumnClick(event: any): void {
     //console.log('Cell Column Click:', event);
 
-    if (event.column === 'patientName') {
-      //console.log('Patient Name Clicked:', event.row);
-      this.CernerApplicationAction('OPENCHART', event.row)
-    } else {
-
-      const dialogRef = this.dialog.open(MPageConfirmComponent, {
-        width: '500px',
-        data: {
-            title: 'Cell Column Click',
-            text: JSON.stringify(event),
-            icon: 'info'
-        }
-      });
+    switch (event.column) {
+      case 'patientName':
+        //console.log('Patient Name Clicked:', event.row);
+        this.CernerApplicationAction('OPENCHART', event.row);
+        break;
+      case 'rnComment':
+      case 'drComment':
+        this.openCommentForm(event);
+        break;
+      default:
+        /*
+        const dialogRef = this.dialog.open(MPageConfirmComponent, {
+          width: '500px',
+          data: {
+              title: 'Cell Column Click',
+              text: JSON.stringify(event),
+              icon: 'info'
+          }
+        });
+        */
+        break;
     }
   }
  
   openCommentForm(event: any) {
     const dialogConfig = new MatDialogConfig();
 
-    // Pass data to the dialog
-    dialogConfig.data = JSON.stringify(event);
+    //create an object that will hold meta data about the comment to be passed to the dialog.  including the comment title
+    const commentMeta = {
+      title: 'RN Comment',
+    }
+
+    if (event.column ===  'rnComment') {
+      commentMeta.title = 'RN Comment';
+    } else if (event.column === 'drComment') {
+      commentMeta.title = 'Dr Comment';
+    }
+    // Pass the commentMeta object to the dialog and the event data
+    dialogConfig.data = {commentMeta, event};
 
     const dialogRef = this.dialog.open(AchCommentComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(ReturnComment => {
-      this.mPage.putLog(`ACH Comment: ${ReturnComment} for encntrId: ${event.encntrId} and personId: ${event.personId}`);
+      this.mPage.putLog(`${commentMeta.title}: ${ReturnComment} for encntrId: ${event.encntrId} and personId: ${event.personId}`);
       // Here you can handle the comment
       this.patientListDS.updateACHComment(ReturnComment, event.encntrId);
       

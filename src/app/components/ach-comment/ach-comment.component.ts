@@ -17,6 +17,7 @@ export class AchCommentComponent implements OnInit {
 
   ngOnInit(): void {
     //this.comment = this.data
+    console.log(this.data)
   }
 
   saveComment() {

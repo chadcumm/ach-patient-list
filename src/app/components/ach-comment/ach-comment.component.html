@@ -1,4 +1,4 @@
-<h4>Add ACH Comment</h4>
+<h4>View/Add {{ data.commentMeta.title}} </h4>
 <form (ngSubmit)="saveComment()">
     <mat-form-field>
       <textarea matInput placeholder="Comment" [(ngModel)]="ach_comment" name="ach-comment"></textarea>
@@ -6,6 +6,6 @@
     <button mat-button type="submit">Save</button>
    <button mat-button type="button" (click)="cancel()">Cancel</button>
   </form>
-  <!--
-  <p style="font-size: xx-small;">{{ data }}</p>
-  -->
+  
+  <p style="font-size: xx-small;">{{ data | json}}</p>
+  
