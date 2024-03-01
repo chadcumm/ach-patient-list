@@ -1,14 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, Input } from '@angular/core';
 import { PopulationDataService } from 'src/app/service/population-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MPageConfirmComponent, mPageService } from '@clinicaloffice/clinical-office-mpage';
 import { AchCommentComponent } from '../ach-comment/ach-comment.component';
+import { Table } from 'primeng/table';
+
 @Component({
   selector: 'app-patient-table',
   templateUrl: './patient-table.component.html',
   styleUrls: ['./patient-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+
 export class PatientTableComponent implements OnInit, DoCheck {
 
   constructor(
@@ -17,6 +21,11 @@ export class PatientTableComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     public patientListCdr: ChangeDetectorRef
   ) { }
+
+  cols: any[] = [];
+
+  _selectedColumns: any[] = [];
+
   ngDoCheck(): void {
     if (this.patientListDS.population_refereshed === true) {
       setTimeout(() => {
@@ -28,12 +37,76 @@ export class PatientTableComponent implements OnInit, DoCheck {
     }
   }
 
+
   ngOnInit(): void {
+
+    this.cols = [
+      { 
+        field: 'facility', 
+        header: 'Facility', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'patientName', 
+        header: 'Patient Name', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'location', 
+        header: 'Location', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'arrivalDtTm',
+        header: 'Arrival', 
+        type: 'date',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'pso', 
+        header: 'POS',  
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'los', 
+        header: 'LOS', 
+        type: 'string',
+        sortable: true,
+        editable: false
+      },
+      { 
+        field: 'drComment', 
+        header: 'Dr Comment', 
+        type: 'string',
+        sortable: false,
+        editable: true
+      },
+  ];
+
+  this._selectedColumns = this.cols;
    
   }
 
+  clear(table: Table) {
+    table.clear();
+}
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
 
-
+  set selectedColumns(val: any[]) {
+    //restore original order
+    this._selectedColumns = this.cols.filter(col => val.includes(col));
+  }
 
   public cellColumnClick(event: any): void {
     //console.log('Cell Column Click:', event);

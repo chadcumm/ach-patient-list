@@ -1,13 +1,68 @@
-<mpage-table 
-    [tableData]="patientListDS.patientlist" 
-    [toolbar]="true"
-    [(columnConfig)]="patientListDS.ACHColumnConfig"
-    [contextMenu]="[
-            {label: 'Update Status'},
-            {label: 'Add Note'},
-            {label: 'Clinical Stability Tool'},
-            {label: 'Social Stability Tool'}
-            ]"
-    (clickColumn)="cellColumnClick($event)"
-    (clickRow)="cellContextMenu($event)"
-    ></mpage-table>
+<p-table 
+        #achpatienttable
+        [value]="patientListDS.patientlist"
+        [columns]="selectedColumns"
+        responsiveLayout="scroll"
+        styleClass="p-datatable-gridlines"
+        sortMode="multiple"
+        [resizableColumns]="true"
+        [globalFilterFields]="['patientName','facility','location']"
+>
+        <ng-template pTemplate="caption">
+                <div class="p-grid">
+                        <div class="p-col-2"> 
+                                <p-multiSelect 
+                                        [options]="cols" 
+                                        [(ngModel)]="selectedColumns"
+                                        optionLabel="header"
+                                        selectedItemsLabel="{0} columns selected" 
+                                        [style]="{minWidth: '200px'}" 
+                                        placeholder="Choose Columns">
+                                </p-multiSelect>
+                        </div>
+                        
+                                
+                        <div class="p-col-8">
+                                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(achpatienttable)"></button>
+                         
+                                <span class="p-input-icon-left p-ml-auto">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text" (input)="achpatienttable.filterGlobal($any($event.target).value, 'contains')" placeholder="Global Search" />
+                                </span>
+                        </div>
+                </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+                <tr>
+                <ng-container *ngFor="let col of columns">
+                        <ng-container *ngIf="col.sortable">
+                                <th pResizableColumn pSortableColumn="{{col.field}}">
+                                        {{col.header}}
+                                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                                </th>
+                        </ng-container>
+                        <ng-container *ngIf="!col.sortable">
+                                <th pResizableColumn>{{col.header}}</th>
+                        </ng-container>
+                </ng-container>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                 <ng-container *ngFor="let col of columns">
+                <td pEditableColumn>
+                        <span *ngIf="col.type === 'date'">
+                                <ng-container *ngIf="rowData[col.field] !== '0000-00-00T00:00:00.000+00:00'">
+                                        {{rowData[col.field] | date: 'dd/MM/yyyy hh:mm'}}
+                                </ng-container>
+                                <ng-container *ngIf="rowData[col.field] === '0000-00-00T00:00:00.000+00:00'">
+                                        N/A
+                                </ng-container>
+                        </span>
+                        <span *ngIf="col.type !== 'date'">{{rowData[col.field]}}</span>
+                    </td>
+                 </ng-container>
+                </tr>
+            </ng-template>
+
+</p-table>

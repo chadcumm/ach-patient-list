@@ -1,6 +1,6 @@
 {
   "name": "ach-patient-list",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -15,7 +15,7 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "^12.2.17",
-    "@angular/animations": "^12.2.16",
+    "@angular/animations": "^12.2.17",
     "@angular/cdk": "^12.2.13",
     "@angular/cli": "^12.2.17",
     "@angular/common": "^12.2.16",
@@ -32,6 +32,9 @@
     "fast-sort": "^3.2.0",
     "iframe-resizer": "^4.3.6",
     "moment": "^2.29.1",
+    "primeflex": "^2.0.0",
+    "primeicons": "^6.0.1",
+    "primeng": "^12.2.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"

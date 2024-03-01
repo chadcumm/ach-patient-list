@@ -1,5 +1,6 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ClinicalOfficeMpageModule} from "@clinicaloffice/clinical-office-mpage";
@@ -14,6 +15,11 @@ import { PatientTableComponent } from './components/patient-table/patient-table.
 import { AchCommentComponent } from './components/ach-comment/ach-comment.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { AchToolbarComponent } from './components/ach-toolbar/ach-toolbar.component';
+import { TableModule } from 'primeng/table';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +37,12 @@ import { AchToolbarComponent } from './components/ach-toolbar/ach-toolbar.compon
     FormsModule,
     ReactiveFormsModule,
     MatMomentDateModule,
-    MatDialogModule
+    MatDialogModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ButtonModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: ErrorHandlerService},
