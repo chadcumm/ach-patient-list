@@ -32,6 +32,11 @@ export class PatientTableComponent implements OnInit, DoCheck {
 
   speedDialItems: any[] = [];
 
+  visibleSidebar1: boolean = false;
+  
+  selectedSidebarEvent: any = []
+  selectedSidebarColumn: any = [];
+
   ngDoCheck(): void {
     if (this.patientListDS.population_refereshed === true) {
       setTimeout(() => {
@@ -73,6 +78,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'facility', 
         header: 'Facility', 
         type: 'string',
+        sortfield: 'facility',
         sortable: true,
         editable: false
       },
@@ -80,6 +86,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'patientName', 
         header: 'Patient Name', 
         type: 'string',
+        sortfield: 'patientName',
         sortable: true,
         editable: false
       },
@@ -87,6 +94,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'location', 
         header: 'Location', 
         type: 'string',
+        sortfield: 'location',
         sortable: true,
         editable: false
       },
@@ -94,13 +102,16 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'arrivalDtTm',
         header: 'Arrival', 
         type: 'date',
+        sortfield: 'arrivalDtTm',
         sortable: true,
-        editable: false
+        editable: false,
+        panel: true
       },
       { 
         field: 'pso', 
         header: 'PSO',  
         type: 'string',
+        sortfield: 'pso',
         sortable: true,
         editable: false
       },
@@ -108,13 +119,16 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'los', 
         header: 'LOS', 
         type: 'string',
+        sortfield: 'hiddenData.los.days',
         sortable: true,
-        editable: false
+        editable: false,
+        panel: true
       },
       { 
         field: 'priority', 
         header: 'Priority', 
         type: 'string',
+        sortfield: 'priority',
         sortable: true,
         editable: false
       },
@@ -122,6 +136,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'demographicScreen', 
         header: 'Demographic Screen', 
         type: 'string',
+        sortfield: 'demographicScreen',
         sortable: true,
         editable: false
       },
@@ -129,6 +144,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'cstResult', 
         header: 'CST Result', 
         type: 'string',
+        sortfield : 'cstResult',
         sortable: true,
         editable: false
       },
@@ -136,6 +152,7 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'cstReassessmentDt', 
         header: 'CST Reassessment Date', 
         type: 'date',
+        sortfield: 'cstReassessmentDt',
         sortable: true,
         editable: false
       },
@@ -143,12 +160,14 @@ export class PatientTableComponent implements OnInit, DoCheck {
         field: 'drComment', 
         header: 'Dr Comment', 
         type: 'string',
+        sortfield: 'drComment',
         sortable: false,
         editable: true
       },
       { 
         field: 'rnComment', 
         header: 'RN Comment', 
+        sortfield: 'rnComment',
         type: 'string',
         sortable: false,
         editable: true
@@ -158,6 +177,15 @@ export class PatientTableComponent implements OnInit, DoCheck {
   this._selectedColumns = this.cols;
    
   }
+
+  openSidebar(event: any, cellClicked: any) {
+    if (cellClicked.panel === true) {
+      this.visibleSidebar1 = true;
+      this.selectedSidebarEvent = event;
+      this.selectedSidebarColumn = cellClicked;
+      console.log('openSidebar:', event);
+    }
+}
 
   onRowSelect(event: any) {
     console.log('Patient Selected:', event.data);

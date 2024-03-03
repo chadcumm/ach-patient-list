@@ -20,6 +20,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {SpeedDialModule} from 'primeng/speeddial';
+import {SidebarModule} from 'primeng/sidebar';
+import {ToolbarModule} from 'primeng/toolbar';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import {SpeedDialModule} from 'primeng/speeddial';
     InputTextModule,
     ButtonModule,
     BrowserAnimationsModule,
-    SpeedDialModule
+    SpeedDialModule,
+    SidebarModule,
+    ToolbarModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: ErrorHandlerService},

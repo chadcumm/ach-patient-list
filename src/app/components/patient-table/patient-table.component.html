@@ -1,11 +1,19 @@
+
+
+
+<p-sidebar styleClass="p-sidebar-md p-sidebar-right"
+        [(visible)]="visibleSidebar1" [modal]="false" position="right" [baseZIndex]="1000">
+        <h3>{{this.selectedSidebarColumn.header}} Information</h3>
+        {{this.selectedSidebarEvent | json}}
+</p-sidebar>
 <p-table 
         #achpatienttable
         [value]="patientListDS.patientlist"
         [columns]="selectedColumns"
-        responsiveLayout="scroll"
+        
         styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
         sortMode="multiple"
-        [resizableColumns]="true"
+        
         selectionMode="single"
         [(selection)]="selectedPatient"
         dataKey="encntrId"
@@ -13,8 +21,8 @@
         [globalFilterFields]="['patientName','facility','location','drComment','rnComment','status']"
 >
         <ng-template pTemplate="caption">
-                <div class="p-grid">
-                        <div class="p-col-2"> 
+                <p-toolbar>
+                        <div class="p-toolbar-group-left">
                                 <p-multiSelect 
                                         [options]="cols" 
                                         [(ngModel)]="selectedColumns"
@@ -24,9 +32,7 @@
                                         placeholder="Choose Columns">
                                 </p-multiSelect>
                         </div>
-                        
-                                
-                        <div class="p-col-8">
+                        <div class="p-toolbar-group-right">
                                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(achpatienttable)"></button>
                          
                                 <span class="p-input-icon-left p-ml-auto">
@@ -34,16 +40,16 @@
                                         <input pInputText type="text" (input)="achpatienttable.filterGlobal($any($event.target).value, 'contains')" placeholder="Global Search" />
                                 </span>
                         </div>
-                </div>
+                </p-toolbar>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
                 <tr>
                         
                 <ng-container *ngFor="let col of columns">
                         <ng-container *ngIf="col.sortable">
-                                <th pResizableColumn pSortableColumn="{{col.field}}">
+                                <th pResizableColumn pSortableColumn="{{col.sortfield}}">
                                         {{col.header}}
-                                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                                        <p-sortIcon field="{{col.sortfield}}"></p-sortIcon>
                                 </th>
                         </ng-container>
                         <ng-container *ngIf="!col.sortable">
@@ -71,10 +77,10 @@
                             </p-cellEditor>
                  </td>
                  <ng-template #notEditable>
-                        <td>
+                        <td (click)="openSidebar(rowData, col)">
                                 <span *ngIf="col.type === 'date'">
                                         <ng-container *ngIf="rowData[col.field] !== '0000-00-00T00:00:00.000+00:00'">
-                                                {{rowData[col.field] | date: 'dd/MM/yyyy hh:mm'}}
+                                                {{rowData[col.field] | date: 'dd-MMM-yyyy hh:mm'}}
                                         </ng-container>
                                         <ng-container *ngIf="rowData[col.field] === '0000-00-00T00:00:00.000+00:00'">
                                                 
