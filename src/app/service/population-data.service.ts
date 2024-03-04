@@ -91,26 +91,7 @@ public loadPreferences(): void {
   });
 }
   public get patientlist(): any[] {
-    if (this.mPage.inMpage === true) {
       return this.populationData.get('patient_population').visits;
-    } else {
-      //console.log('patientlist:', this.localJSONData);
-      return this.localJSONData?.[0]?.visits || [];
-    }
-  }
-
-  public updatePatientName(patientName: string, encntrId: number) {
-    let patientList: any[];
-    if (this.mPage.inMpage === true) {
-      patientList = this.populationData.get('patient_population').visits;
-    } else {
-      patientList = this.localJSONData?.[0]?.visits || [];
-    }
-    patientList.forEach((visit: any) => {
-      if (visit.encntrId === encntrId) {
-        visit.patientName = patientName;
-      }
-    });
   }
 
   public updateACHComment(NewACHComment: string, encntrId: number) {
@@ -129,11 +110,7 @@ public loadPreferences(): void {
   
   // Determine if patients have been loaded
   public get patientlistLoaded(): boolean {
-    if (this.mPage.inMpage === true) {
       return this.populationData.isLoaded('patient_population');
-    } else {
-      return !!this.localJSONData;
-    }
   }
 
   public loadPatientPopulation(): void {
@@ -169,7 +146,7 @@ public loadPreferences(): void {
       )
       .subscribe(
         (data: any) => {
-          this.localJSONData = [data];
+          this.populationData.set('patient_population', data);
           this.loading_population = false;
           this.population_refereshed = true;  
         },
